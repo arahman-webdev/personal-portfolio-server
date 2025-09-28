@@ -17,6 +17,6 @@ const loginUser = async({email, password}:{email:string, password:string})=>{
 }
 
 
-const authService = {
+export const authService = {
     loginUser
 }
