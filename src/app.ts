@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express"
 import cors from "cors"
 import compression from "compression"
+import { blogRouter } from "./modules/blog/blog.router"
 
 
 export const app = express()
@@ -16,6 +17,11 @@ app.use(cors({
     credentials: true
 }))
 
+
+
+// router 
+
+app.use('/api/v1/post', blogRouter)
 
 // Default route testing
 

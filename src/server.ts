@@ -3,6 +3,7 @@ import http, { Server } from "http";
 import dotenv from "dotenv";
 import { app } from "./app";
 import { prisma } from "./config/db";
+import { seedAdmin } from "./utills/seedAdmin";
 
 
 
@@ -36,6 +37,11 @@ async function startServer() {
     process.exit(1);
   }
 }
+
+(async () => {
+    
+    await seedAdmin()
+})()
 
 /**
  * Gracefully shutdown the server and close database connections.
