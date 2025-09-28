@@ -22,6 +22,7 @@ app.use(cors({
 // router 
 
 app.use('/api/v1/post', blogRouter)
+app.use('/api/v1/auth', blogRouter)
 
 // Default route testing
 
