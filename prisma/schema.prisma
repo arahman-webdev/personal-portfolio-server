@@ -36,3 +36,12 @@ model Post{
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 }
+
+model Project {
+  id Int @id @default(autoincrement())
+  title String
+  description String
+  liveUrl String
+  thumbnail String
+  createdAt DateTime @default(now())
+}

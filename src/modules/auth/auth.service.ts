@@ -1,5 +1,5 @@
 import { prisma } from "../../config/db"
-
+import bcrypt from "bcrypt"
 const loginUser = async({email, password}:{email:string, password:string})=>{
     const user = await prisma.user.findUnique({
         where:{email}
@@ -9,10 +9,12 @@ const loginUser = async({email, password}:{email:string, password:string})=>{
         throw new Error("User not found")
     }
 
-    if(password === user.password){
+    const isPasswordValid = await bcrypt.compare(password, user.password)
+
+    if(isPasswordValid){
         return user
     }else{
-        throw new Error("Password is incorrect")
+        console.log("Password is incorrect")
     }
 }
 
