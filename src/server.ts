@@ -87,3 +87,15 @@ function handleProcessEvents() {
 
 // Start the application
 startServer();
+
+
+
+
+/**✓
+ * 
+ * redesign shema-------------- 
+ * jwt toke set up with refresh token
+ * auth with jwt token
+ * blog with cloudinary
+ * 
+ */
