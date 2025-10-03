@@ -9,7 +9,9 @@ import { blogController } from "./blog.controller"
 const router = express.Router()
 
 
-router.post('/',checkAuth(Role.ADMIN), upload.single("thumbnail"), blogController.createPost)
+router.post('/', upload.single("thumbnail"), blogController.createPost)
+router.get('/', blogController.getAllPosts)
+router.delete('/:id', blogController.deletePost)
 
 
 export const blogRouter = router

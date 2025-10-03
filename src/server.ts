@@ -97,7 +97,11 @@ startServer();
  * jwt toke set up with refresh token ✓
  * auth with jwt token ✓
  * blog creation with cloudinary ✓
- * all blogs get with cloudinary
+ * all blogs get ✓
+ * blog delete ✓
+ * blog update
+ * 
+ * 
  * 
  * 
  * 

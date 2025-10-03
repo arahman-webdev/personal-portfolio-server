@@ -47,6 +47,44 @@ const createPost = async (req: Request, res: Response) => {
   }
 };
 
+const getAllPosts = async (req: Request, res: Response) => {
+  try {
+
+    const page = Number(req.query.page) || 1
+    const limit = Number(req.query.limit) || 1
+    console.log(page, limit)
+    const allPosts = await blogService.getAllPosts({
+      page,
+      limit
+    })
+    res.status(201).json({
+      success: true,
+      message: "Posts retrieved successfully",
+      data: allPosts
+    })
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+
+const deletePost = async (req: Request, res: Response) => {
+  try {
+    const postId = Number(req.params.id)
+    const result = await blogService.deletePost(postId)
+
+    res.status(201).json({
+      success: true,
+      message: "Deleted successfully",
+      data: null
+    })
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 export const blogController = {
   createPost,
+  getAllPosts,
+  deletePost
 };
