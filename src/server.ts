@@ -93,9 +93,12 @@ startServer();
 
 /**✓
  * 
- * redesign shema-------------- 
- * jwt toke set up with refresh token
- * auth with jwt token
- * blog with cloudinary
+ * redesign shema-------------- ✓
+ * jwt toke set up with refresh token ✓
+ * auth with jwt token ✓
+ * blog creation with cloudinary ✓
+ * all blogs get with cloudinary
+ * 
+ * 
  * 
  */

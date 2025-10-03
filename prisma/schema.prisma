@@ -37,7 +37,6 @@ model RefreshToken {
 model Blog {
   id        Int      @id @default(autoincrement())
   title     String
-  slug      String   @unique
   excerpt   String?
   content   String
   thumbnail String?
@@ -56,6 +55,7 @@ model Project {
   liveUrl     String?
   repoUrl     String?
   thumbnail   String?
+  thumbnailId String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
