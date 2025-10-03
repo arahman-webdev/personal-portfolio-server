@@ -20,7 +20,7 @@ model User {
   password      String
   role          String         @default("Admin")
   createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  updatedAt     DateTime       @default(now())
   refreshTokens RefreshToken[]
 }
 
@@ -41,9 +41,10 @@ model Blog {
   excerpt   String?
   content   String
   thumbnail String?
+  thumbnailId String?
   published Boolean  @default(false)
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now())
 }
 
 model Project {

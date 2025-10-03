@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { blogService } from "./blog.service";
+import AppError from "../../errorHelper/AppError";
 
 const createPost = async(req:Request, res:Response)=>{
     try{
@@ -11,7 +12,7 @@ const createPost = async(req:Request, res:Response)=>{
             data: result
         })
     }catch(err){
-        console.log(err)
+        throw new AppError(404, "Something is missing")
     }
 }
 

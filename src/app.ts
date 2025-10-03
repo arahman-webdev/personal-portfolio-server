@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express"
 import cors from "cors"
+import cookieParser from "cookie-parser";
 import compression from "compression"
 import { blogRouter } from "./modules/blog/blog.router"
 import { authRouter } from "./modules/auth/auth.router"
@@ -12,7 +13,7 @@ export const app = express()
 app.use(cors())
 app.use(compression())
 app.use(express.json())
-
+app.use(cookieParser()); 
 
 app.use(cors({
     origin: "http://localhost:3000",
