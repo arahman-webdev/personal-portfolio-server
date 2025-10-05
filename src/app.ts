@@ -5,20 +5,21 @@ import compression from "compression"
 import { blogRouter } from "./modules/blog/blog.router"
 import { authRouter } from "./modules/auth/auth.router"
 import { projectRouter } from "./modules/project/project.router"
+import { userRoutes } from "./modules/user/user.router";
 
 
 export const app = express()
 
 // Middleware------------------
-app.use(cors())
+app.use(cors({
+    origin: ['http://localhost:3000', 'https://abdurrahmandev-phi.vercel.app'],
+    credentials: true
+}))
 app.use(compression())
 app.use(express.json())
 app.use(cookieParser()); 
 
-app.use(cors({
-    origin: "http://localhost:3000",
-    credentials: true
-}))
+
 
 
 
@@ -26,6 +27,8 @@ app.use(cors({
 
 app.use('/api/v1/post', blogRouter)
 app.use('/api/v1/auth', authRouter)
+app.use('/api/v1/auth', authRouter)
+app.use('/api/v1/user', userRoutes)
 app.use('/api/v1/project', projectRouter)
 
 // Default route testing

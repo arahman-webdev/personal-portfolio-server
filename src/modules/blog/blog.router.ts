@@ -12,6 +12,7 @@ const router = express.Router()
 router.post('/', upload.single("thumbnail"), blogController.createPost)
 router.get('/', blogController.getAllPosts)
 router.delete('/:id', blogController.deletePost)
+router.put('/:id',upload.single("thumbnail"), blogController.updatePost)
 
 
 export const blogRouter = router

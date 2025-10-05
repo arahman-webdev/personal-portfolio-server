@@ -3,6 +3,7 @@ import { prisma } from "../../config/db"
 import AppError from "../../errorHelper/AppError"
 import { v2 as cloudinary } from "cloudinary"
 import { deleteFromCloudinary } from "../../config/deleteFromCloudinary"
+import { uploadToCloudinary } from "../../config/uploadToCloudinary"
 const createPost = async (payload: Prisma.BlogCreateInput): Promise<Blog> => {
     const result = await prisma.blog.create({
         data: payload,
@@ -45,7 +46,7 @@ const deletePost = async (id: number) => {
 }
 
 
-const updatePost = async (id: number, data: Partial<Blog>) => {
+const updatePost = async (id: number, data: Partial<Blog>, file?: Express.Multer.File) => {
     const blogPost = await prisma.blog.findUnique({
         where: { id }
     })
@@ -54,12 +55,31 @@ const updatePost = async (id: number, data: Partial<Blog>) => {
         throw new AppError(404, "Blog not found")
     }
 
+    let thumbnail = blogPost.thumbnail
+    let thumbnailId = blogPost.thumbnailId
+
+    if (file) {
+        if (thumbnailId) {
+            await deleteFromCloudinary(thumbnailId)
+        }
+
+        const uploaded = await uploadToCloudinary(file.buffer, "blogs");
+        thumbnail = uploaded.secure_url;
+        thumbnailId = uploaded.public_id;
+    }
+
     const result = await prisma.blog.update({
         where: {
             id,
         },
-        data
+        data: {
+            ...data,
+            thumbnail,
+            thumbnailId,
+        }
     })
+
+    return result
 }
 
 

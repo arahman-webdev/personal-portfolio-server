@@ -3,16 +3,16 @@ import { blogService } from "./blog.service";
 import AppError from "../../errorHelper/AppError";
 import { uploadToCloudinary } from "../../config/uploadToCloudinary";
 
-const createPost = async (req: Request, res: Response) => {
+ const createPost = async (req: Request, res: Response) => {
   try {
-    let { data } = req.body;
+    let data = req.body;
 
-    // Parse JSON string if exists
-    if (typeof data === "string") {
-      data = JSON.parse(data);
+    // If data came via FormData → parse stringified JSON
+    if (data.data && typeof data.data === "string") {
+      data = JSON.parse(data.data);
     }
 
-    const { title, content } = data;
+    const { title, content, excerpt, published } = data;
 
     if (!title || !content) {
       throw new AppError(400, "Title and content are required");
@@ -30,28 +30,32 @@ const createPost = async (req: Request, res: Response) => {
     const blog = await blogService.createPost({
       title,
       content,
+      excerpt,
       thumbnail,
       thumbnailId,
+      published: published === "true" || published === true,
     });
 
     res.status(201).json({
-      status: true,
+      success: true,
       message: "Blog post created successfully",
       data: blog,
     });
   } catch (err: any) {
+    console.error(err);
     res.status(err.statusCode || 500).json({
-      status: false,
+      success: false,
       message: err.message || "Failed to create post",
     });
   }
 };
 
+
 const getAllPosts = async (req: Request, res: Response) => {
   try {
 
     const page = Number(req.query.page) || 1
-    const limit = Number(req.query.limit) || 1
+    const limit = Number(req.query.limit) || 10
     console.log(page, limit)
     const allPosts = await blogService.getAllPosts({
       page,
@@ -83,8 +87,34 @@ const deletePost = async (req: Request, res: Response) => {
   }
 }
 
+
+const updatePost = async (req: Request, res: Response) => {
+  try {
+    const postId = Number(req.params.id)
+
+    let body = req.body;
+
+    // If `data` was sent as string (form-data case), parse it
+    if (typeof body.data === "string") {
+      body = JSON.parse(body.data);
+    }
+
+    const result = await blogService.updatePost(postId, body, req.file)
+
+    res.status(201).json({
+      success: true,
+      message: "Updated successfully",
+      data: result
+    })
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+
 export const blogController = {
   createPost,
   getAllPosts,
-  deletePost
+  deletePost,
+  updatePost
 };
