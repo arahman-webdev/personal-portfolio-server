@@ -19,11 +19,23 @@ const getAllPosts = async ({ page, limit }: { page: number, limit: number }) => 
     const skip = (page - 1) * limit
 
     const allPosts = await prisma.blog.findMany({
+        orderBy:{
+            createdAt:"desc"
+        },
         skip,
         take: limit
     })
 
     return allPosts
+}
+
+
+const getSinglePost = async (id:number) => {
+    const post = await prisma.blog.findUnique({
+        where:{id}
+    })
+
+    return post
 }
 
 
@@ -87,5 +99,6 @@ export const blogService = {
     createPost,
     getAllPosts,
     deletePost,
-    updatePost
+    updatePost,
+    getSinglePost
 }

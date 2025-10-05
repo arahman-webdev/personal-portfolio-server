@@ -1,9 +1,9 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { blogService } from "./blog.service";
 import AppError from "../../errorHelper/AppError";
 import { uploadToCloudinary } from "../../config/uploadToCloudinary";
 
- const createPost = async (req: Request, res: Response) => {
+const createPost = async (req: Request, res: Response) => {
   try {
     let data = req.body;
 
@@ -55,7 +55,7 @@ const getAllPosts = async (req: Request, res: Response) => {
   try {
 
     const page = Number(req.query.page) || 1
-    const limit = Number(req.query.limit) || 10
+    const limit = Number(req.query.limit) || 6
     console.log(page, limit)
     const allPosts = await blogService.getAllPosts({
       page,
@@ -68,6 +68,23 @@ const getAllPosts = async (req: Request, res: Response) => {
     })
   } catch (err) {
     console.log(err)
+  }
+}
+
+
+const getSinglePost = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const postId = Number(req.params.id);
+    const post = await blogService.getSinglePost(postId)
+
+    res.status(201).json({
+      success: true,
+      message: "Posts retrieved successfully",
+      data: post
+    })
+  } catch (err) {
+    console.log(err)
+    next(err)
   }
 }
 
@@ -116,5 +133,6 @@ export const blogController = {
   createPost,
   getAllPosts,
   deletePost,
-  updatePost
+  updatePost,
+  getSinglePost
 };

@@ -13,6 +13,7 @@ router.post('/', upload.single("thumbnail"), blogController.createPost)
 router.get('/', blogController.getAllPosts)
 router.delete('/:id', blogController.deletePost)
 router.put('/:id',upload.single("thumbnail"), blogController.updatePost)
+router.get('/:id', blogController.getSinglePost)
 
 
 export const blogRouter = router
