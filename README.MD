@@ -11,54 +11,53 @@ It supports blog management, authentication, image upload, and pagination — re
 
 Personal Portfolio + Blog System
 
-Secure Authentication (JWT + Cookies)
+Modular architecture (Controllers, Services, Routes)
 
-Admin Dashboard
+Prisma ORM with PostgreSQL or MySQL
 
-Create, edit, and delete blog posts
+JWT Authentication (Access & Refresh tokens)
 
-Upload images to Cloudinary
+Image Upload (Cloudinary supported)
 
-Public Blog Pages
+Blog Management
 
-Uses ISR for incremental updates without full rebuilds
+Create, update, delete, view
 
-Modern UI
+Pagination and sorting
 
-Built with Tailwind CSS + shadcn/ui
+CORS + Cookie-based Auth
 
-Role-based Access Control
+Error handling & Validation
 
-Optimized SEO, metadata & OpenGraph
-
-Toaster Notifications (using Sonner)
-
-API Integration with Express/Prisma backend
+Timestamps for all models
 
 # Tech Stack
 Technology	
-Next.js 14+ 
+Node.js	
+Express.js	
+Prisma ORM	
+PostgreSQL / MySQL	
 TypeScript	
-Tailwind CSS	
-shadcn/ui	
-Framer Motion	
-Sonner	Toast
 Cloudinary	
-JWT Auth	
+JWT	Secure 
 
 
 🧩 Installation & Setup
 
 # 1 Clone the repository
-git clone https://github.com/arahman-webdev/personal-portfolio-client-side.git
+git clone https://github.com/arahman-webdev/personal-portfolio-server.git
 
 # 2 Install dependencies
 npm install
 
+# 3 Generate Prisma client
+npx prisma generate
 
-# 3 Run development
+# 4 Run database migrations
+npx prisma migrate dev --name init
+
+# 5 Start the development server
 npm run dev
-
 
 Server runs on 👉 http://localhost:5000
 
