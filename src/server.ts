@@ -28,7 +28,7 @@ async function startServer() {
     connectionDB()
     server = http.createServer(app);
     server.listen(process.env.PORT, () => {
-      console.log(`🚀 Server is running on port ${process.env.PORT}`);
+      console.log(`🚀 Abdur rahman Server is running on port ${process.env.PORT}`);
     });
 
     handleProcessEvents();

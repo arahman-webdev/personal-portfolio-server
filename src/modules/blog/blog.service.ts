@@ -36,6 +36,7 @@ const getSinglePost = async (id:number) => {
     })
 
     return post
+    
 }
 
 

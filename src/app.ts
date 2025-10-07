@@ -10,11 +10,10 @@ import { userRoutes } from "./modules/user/user.router";
 
 export const app = express()
 
-// Middleware------------------
 app.use(cors({
-    origin: ['http://localhost:3000', 'https://abdurrahmandev-phi.vercel.app'],
+    origin: ['http://localhost:3000',"https://abdurrahmanwebdev.netlify.app"],
     credentials: true
-}))
+}));
 app.use(compression())
 app.use(express.json())
 app.use(cookieParser()); 
@@ -34,5 +33,5 @@ app.use('/api/v1/project', projectRouter)
 // Default route testing
 
 app.get('/',(req:Request, res:Response)=>{
-    res.send("Server is running")
+    res.send("Abdur Rahman Server is running")
 })

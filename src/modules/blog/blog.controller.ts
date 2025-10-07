@@ -14,6 +14,7 @@ const createPost = async (req: Request, res: Response) => {
 
     const { title, content, excerpt, published } = data;
 
+    // ✅ Validate required fields
     if (!title || !content) {
       throw new AppError(400, "Title and content are required");
     }
@@ -21,12 +22,18 @@ const createPost = async (req: Request, res: Response) => {
     let thumbnail: string | null = null;
     let thumbnailId: string | null = null;
 
+    // ✅ Upload image if exists
     if (req.file) {
-      const uploaded = await uploadToCloudinary(req.file.buffer, "blogs");
-      thumbnail = uploaded.secure_url;
-      thumbnailId = uploaded.public_id;
+      try {
+        const uploaded = await uploadToCloudinary(req.file.buffer, "blogs");
+        thumbnail = uploaded.secure_url;
+        thumbnailId = uploaded.public_id;
+      } catch (uploadError: any) {
+        throw new AppError(500, "Failed to upload image");
+      }
     }
 
+    // ✅ Create blog post
     const blog = await blogService.createPost({
       title,
       content,
@@ -36,13 +43,16 @@ const createPost = async (req: Request, res: Response) => {
       published: published === "true" || published === true,
     });
 
+    // ✅ Success response
     res.status(201).json({
       success: true,
       message: "Blog post created successfully",
       data: blog,
     });
   } catch (err: any) {
-    console.error(err);
+    console.error("Create Post Error:", err);
+
+    // Send structured error to frontend
     res.status(err.statusCode || 500).json({
       success: false,
       message: err.message || "Failed to create post",

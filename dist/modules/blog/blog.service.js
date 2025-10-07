@@ -26,10 +26,19 @@ const createPost = (payload) => __awaiter(void 0, void 0, void 0, function* () {
 const getAllPosts = (_a) => __awaiter(void 0, [_a], void 0, function* ({ page, limit }) {
     const skip = (page - 1) * limit;
     const allPosts = yield db_1.prisma.blog.findMany({
+        orderBy: {
+            createdAt: "desc"
+        },
         skip,
         take: limit
     });
     return allPosts;
+});
+const getSinglePost = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const post = yield db_1.prisma.blog.findUnique({
+        where: { id }
+    });
+    return post;
 });
 const deletePost = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const blog = yield db_1.prisma.blog.findUnique({
@@ -74,5 +83,6 @@ exports.blogService = {
     createPost,
     getAllPosts,
     deletePost,
-    updatePost
+    updatePost,
+    getSinglePost
 };

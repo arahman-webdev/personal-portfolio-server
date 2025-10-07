@@ -12,4 +12,5 @@ router.post('/', multer_config_1.upload.single("thumbnail"), blog_controller_1.b
 router.get('/', blog_controller_1.blogController.getAllPosts);
 router.delete('/:id', blog_controller_1.blogController.deletePost);
 router.put('/:id', multer_config_1.upload.single("thumbnail"), blog_controller_1.blogController.updatePost);
+router.get('/:id', blog_controller_1.blogController.getSinglePost);
 exports.blogRouter = router;

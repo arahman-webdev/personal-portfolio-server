@@ -5,13 +5,15 @@ export interface AuthTokens {
     refreshToken?: string;
 }
 
+
+
+
 export const setAuthCookie = (res: Response, tokenInfo: AuthTokens) => {
     if (tokenInfo.accessToken) {
         res.cookie("accessToken", tokenInfo.accessToken, {
             httpOnly: true,
             secure: true,
-            sameSite: "none",
-            maxAge: 15 * 60 * 1000, // 15 min
+            sameSite: "none"
         })
     }
 
@@ -20,7 +22,11 @@ export const setAuthCookie = (res: Response, tokenInfo: AuthTokens) => {
             httpOnly: true,
             secure: true,
             sameSite: "none",
-            maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+            path:"/"
         })
     }
 }
+
+// maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+// maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+

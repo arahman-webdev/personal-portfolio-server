@@ -11,10 +11,10 @@ const compression_1 = __importDefault(require("compression"));
 const blog_router_1 = require("./modules/blog/blog.router");
 const auth_router_1 = require("./modules/auth/auth.router");
 const project_router_1 = require("./modules/project/project.router");
+const user_router_1 = require("./modules/user/user.router");
 exports.app = (0, express_1.default)();
-// Middleware------------------
 exports.app.use((0, cors_1.default)({
-    origin: ['http://localhost:3000', 'https://abdurrahmandev-phi.vercel.app'],
+    origin: ['http://localhost:3000', "https://abdurrahmanwebdev.netlify.app"],
     credentials: true
 }));
 exports.app.use((0, compression_1.default)());
@@ -23,8 +23,10 @@ exports.app.use((0, cookie_parser_1.default)());
 // router 
 exports.app.use('/api/v1/post', blog_router_1.blogRouter);
 exports.app.use('/api/v1/auth', auth_router_1.authRouter);
+exports.app.use('/api/v1/auth', auth_router_1.authRouter);
+exports.app.use('/api/v1/user', user_router_1.userRoutes);
 exports.app.use('/api/v1/project', project_router_1.projectRouter);
 // Default route testing
 exports.app.get('/', (req, res) => {
-    res.send("Server is running");
+    res.send("Abdur Rahman Server is running");
 });

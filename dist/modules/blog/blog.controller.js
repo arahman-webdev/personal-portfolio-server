@@ -24,16 +24,24 @@ const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             data = JSON.parse(data.data);
         }
         const { title, content, excerpt, published } = data;
+        // ✅ Validate required fields
         if (!title || !content) {
             throw new AppError_1.default(400, "Title and content are required");
         }
         let thumbnail = null;
         let thumbnailId = null;
+        // ✅ Upload image if exists
         if (req.file) {
-            const uploaded = yield (0, uploadToCloudinary_1.uploadToCloudinary)(req.file.buffer, "blogs");
-            thumbnail = uploaded.secure_url;
-            thumbnailId = uploaded.public_id;
+            try {
+                const uploaded = yield (0, uploadToCloudinary_1.uploadToCloudinary)(req.file.buffer, "blogs");
+                thumbnail = uploaded.secure_url;
+                thumbnailId = uploaded.public_id;
+            }
+            catch (uploadError) {
+                throw new AppError_1.default(500, "Failed to upload image");
+            }
         }
+        // ✅ Create blog post
         const blog = yield blog_service_1.blogService.createPost({
             title,
             content,
@@ -42,6 +50,7 @@ const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             thumbnailId,
             published: published === "true" || published === true,
         });
+        // ✅ Success response
         res.status(201).json({
             success: true,
             message: "Blog post created successfully",
@@ -49,7 +58,8 @@ const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         });
     }
     catch (err) {
-        console.error(err);
+        console.error("Create Post Error:", err);
+        // Send structured error to frontend
         res.status(err.statusCode || 500).json({
             success: false,
             message: err.message || "Failed to create post",
@@ -59,7 +69,7 @@ const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 const getAllPosts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const page = Number(req.query.page) || 1;
-        const limit = Number(req.query.limit) || 10;
+        const limit = Number(req.query.limit) || 6;
         console.log(page, limit);
         const allPosts = yield blog_service_1.blogService.getAllPosts({
             page,
@@ -73,6 +83,21 @@ const getAllPosts = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
     catch (err) {
         console.log(err);
+    }
+});
+const getSinglePost = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const postId = Number(req.params.id);
+        const post = yield blog_service_1.blogService.getSinglePost(postId);
+        res.status(201).json({
+            success: true,
+            message: "Posts retrieved successfully",
+            data: post
+        });
+    }
+    catch (err) {
+        console.log(err);
+        next(err);
     }
 });
 const deletePost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -112,5 +137,6 @@ exports.blogController = {
     createPost,
     getAllPosts,
     deletePost,
-    updatePost
+    updatePost,
+    getSinglePost
 };
