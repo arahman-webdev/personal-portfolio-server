@@ -14,7 +14,7 @@ const project_router_1 = require("./modules/project/project.router");
 const user_router_1 = require("./modules/user/user.router");
 exports.app = (0, express_1.default)();
 exports.app.use((0, cors_1.default)({
-    origin: ['http://localhost:3000', "https://abdurrahmanwebdev.netlify.app"],
+    origin: ['http://localhost:3000', "https://abdurrahmandev-phi.vercel.app"],
     credentials: true
 }));
 exports.app.use((0, compression_1.default)());

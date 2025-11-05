@@ -11,7 +11,7 @@ import { userRoutes } from "./modules/user/user.router";
 export const app = express()
 
 app.use(cors({
-    origin: ['http://localhost:3000',"https://abdurrahmanwebdev.netlify.app"],
+    origin: ['http://localhost:3000',"https://abdurrahmandev-phi.vercel.app"],
     credentials: true
 }));
 app.use(compression())

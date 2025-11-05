@@ -2,10 +2,7 @@
 import { UploadApiResponse } from "cloudinary";
 import { cloudinaryUpload } from "./cloudinary.config";
 
-export const uploadToCloudinary = (
-  fileBuffer: Buffer,
-  folder = "portfolio"
-): Promise<UploadApiResponse> => {
+export const uploadToCloudinary = (fileBuffer: Buffer,folder = "portfolio"): Promise<UploadApiResponse> => {
   return new Promise((resolve, reject) => {
     const stream = cloudinaryUpload.uploader.upload_stream(
       {
