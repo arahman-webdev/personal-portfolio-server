@@ -5,12 +5,12 @@ import { JwtPayload } from "jsonwebtoken";
 import AppError from "../../errorHelper/AppError";
 import { userSerivice } from "./user.service";
 
-export const UserController = {
-  getMe: async (req: Request, res: Response) => {
+
+  const  getMe = async (req: Request, res: Response) => {
     try {
       const decodedToken = req.user as JwtPayload;
 
- 
+
       if (!decodedToken || !decodedToken.userId) {
         throw new AppError(401, "Unauthorized");
       }
@@ -29,6 +29,24 @@ export const UserController = {
         message: error.message || "Something went wrong",
       });
     }
-  },
-};
+  }
 
+  const getAllusers = async(req: Request, res: Response) =>{
+    try{
+      const result = await userSerivice.getAllusers()
+      res.json({
+        success: true,
+        message: "User retrived successfully",
+        data: result
+      })
+    }catch(err){
+      console.log(err)
+    }
+  }
+
+
+
+export const UserController = {
+  getMe,
+getAllusers
+}

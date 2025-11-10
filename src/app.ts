@@ -6,6 +6,7 @@ import { blogRouter } from "./modules/blog/blog.router"
 import { authRouter } from "./modules/auth/auth.router"
 import { projectRouter } from "./modules/project/project.router"
 import { userRoutes } from "./modules/user/user.router";
+import { productRouter } from "./modules/products/product.router";
 
 
 export const app = express()
@@ -29,6 +30,7 @@ app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/user', userRoutes)
 app.use('/api/v1/project', projectRouter)
+app.use('/api/v1/product', productRouter)
 
 // Default route testing
 
